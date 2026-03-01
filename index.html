@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Illustrating Mouse 🐭 | Juhi Srivastava</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --cream: #F5F0E8;
+  --purple: #3D1A6E;
+  --purple-mid: #5A2DA0;
+  --yellow: #F5C518;
+  --ink: #1A1210;
+  --white: #FFFFFF;
+  --lavender: #EDE0FF;
+  --green: #7A9E7E;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--cream); color: var(--ink); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; cursor: none; }
+
+.cursor { width: 12px; height: 12px; background: var(--purple); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.2s ease; opacity: 0; }
+.cursor-ring { width: 36px; height: 36px; border: 2.5px solid var(--purple); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; opacity: 0; transition: border-color 0.2s, transform 0.2s; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; justify-content: center; padding: 1.2rem 2rem; }
+.nav-pill { background: var(--purple); border-radius: 100px; display: flex; align-items: center; padding: 0.4rem 0.4rem 0.4rem 0.5rem; gap: 0.3rem; box-shadow: 0 4px 24px rgba(61,26,110,0.3); }
+.nav-logo { color: var(--white); font-weight: 800; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.5rem 1rem; line-height: 1.2; text-decoration: none; }
+.nav-logo span { display: block; font-weight: 300; letter-spacing: 0.12em; font-size: 0.65rem; }
+.nav-links { display: flex; gap: 0.3rem; list-style: none; }
+.nav-links a { display: block; background: var(--white); color: var(--ink); font-size: 0.82rem; font-weight: 600; text-decoration: none; padding: 0.55rem 1.1rem; border-radius: 100px; transition: background 0.2s, color 0.2s, transform 0.15s; white-space: nowrap; }
+.nav-links a:hover { background: var(--yellow); transform: translateY(-2px); }
+
+/* HERO */
+#hero { min-height: 100vh; display: flex; align-items: center; padding: 7rem 5vw 4rem; position: relative; overflow: hidden; }
+.hero-content { max-width: 620px; position: relative; z-index: 2; }
+.hero-hello { font-family: 'Fraunces', serif; font-size: clamp(5rem, 12vw, 9rem); font-weight: 900; line-height: 0.95; margin-bottom: 1.5rem; opacity: 0; transform: translateY(40px); animation: fadeUp 0.8s ease forwards 0.2s; }
+.hero-hello .wave { display: inline-block; animation: wave 1.8s ease-in-out 1.2s 2; }
+@keyframes wave { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-15deg)} 75%{transform:rotate(15deg)} }
+.hero-intro { font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.7; margin-bottom: 1.5rem; opacity: 0; transform: translateY(30px); animation: fadeUp 0.8s ease forwards 0.5s; }
+.hero-intro .aka { color: var(--purple-mid); font-style: italic; font-weight: 600; }
+.hero-intro .bold { font-weight: 700; color: var(--purple); }
+.hero-location { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: #777; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.8s ease forwards 0.7s; }
+.hero-whisper { display: inline-block; background: var(--lavender); border-radius: 16px 16px 16px 4px; padding: 0.9rem 1.3rem; font-size: 0.9rem; line-height: 1.6; max-width: 400px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.9s; }
+.hero-whisper a { color: var(--purple-mid); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--purple-mid); }
+.hero-image-area { position: absolute; right: 0; top: 0; bottom: 0; width: 48%; display: flex; align-items: flex-end; justify-content: center; opacity: 0; animation: fadeUp 0.9s ease forwards 0.4s; }
+.hero-img-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10rem; color: rgba(61,26,110,0.06); }
+.hero-img-placeholder p { font-size: 0.75rem; color: #ccc; font-style: italic; margin-top: 1rem; }
+.hero-band { position: absolute; bottom: 0; left: 0; right: 0; height: 14px; background: var(--yellow); }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+/* SECTION PILL HEADER */
+.section-pill-header { display: inline-flex; align-items: center; gap: 0.8rem; background: var(--purple); color: var(--white); font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.7rem 1.8rem; border-radius: 100px; margin-bottom: 3rem; }
+.arrow { color: var(--yellow); }
+
+/* CLIENTS */
+#clients { background: var(--ink); padding: 5rem 0; }
+#clients .inner { padding: 0 5vw; margin-bottom: 2.5rem; }
+.marquee-wrapper { overflow: hidden; margin-bottom: 1rem; }
+.marquee-track { display: flex; white-space: nowrap; animation: marquee 35s linear infinite; }
+.marquee-track.rev { animation-direction: reverse; animation-duration: 28s; }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.marquee-item { display: inline-flex; align-items: center; gap: 1rem; font-family: 'Fraunces', serif; font-size: clamp(1rem, 1.8vw, 1.4rem); font-weight: 700; color: var(--cream); padding: 0.6rem 2rem; border-right: 1px solid #333; white-space: nowrap; transition: color 0.2s; }
+.marquee-item:hover { color: var(--yellow); }
+.mdot { width: 5px; height: 5px; background: var(--yellow); border-radius: 50%; flex-shrink: 0; }
+
+/* ABOUT */
+#about { padding: 5rem 5vw; }
+.about-bento { display: grid; grid-template-columns: 260px 1fr 1fr; gap: 1rem; }
+.bento-card { border-radius: 16px; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s; }
+.bento-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(61,26,110,0.15); }
+.bento-photo { grid-row: span 2; background: var(--lavender); min-height: 380px; display: flex; flex-direction: column; }
+.bento-photo-inner { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 5rem; gap: 0.5rem; }
+.bento-photo-inner p { font-size: 0.75rem; color: #999; font-style: italic; }
+.bento-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bento-role { background: var(--green); color: white; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+.bento-role h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.2rem; }
+.bento-role p { font-size: 1rem; font-style: italic; font-weight: 300; }
+.bento-role-emoji { font-size: 4rem; }
+.bento-edu { background: var(--ink); color: white; padding: 1.5rem; display: flex; flex-direction: column; justify-content: flex-end; }
+.bento-edu h3 { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 900; }
+.bento-edu p { color: #aaa; font-style: italic; font-size: 0.9rem; margin-top: 0.3rem; }
+.bento-illo { background: var(--yellow); min-height: 180px; display: flex; align-items: center; justify-content: center; font-size: 5rem; }
+.bento-stats { background: var(--purple); color: white; padding: 1.5rem 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.stat-num { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 900; line-height: 1; color: var(--yellow); }
+.stat-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.6); }
+
+/* WORK */
+#work { padding: 5rem 5vw; }
+.work-note { font-size: 0.8rem; color: #999; font-style: italic; margin-bottom: 1.5rem; margin-top: -1.5rem; }
+.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.work-item { border-radius: 12px; overflow: hidden; position: relative; aspect-ratio: 4/3; cursor: none; }
+.work-item:nth-child(1){background:#EDE0FF}
+.work-item:nth-child(2){background:#FFE8D6}
+.work-item:nth-child(3){background:#D6F0E8}
+.work-item:nth-child(4){background:#FFF0C8; aspect-ratio:16/9; grid-column:span 2}
+.work-item:nth-child(5){background:#E8D6FF}
+.work-item:nth-child(6){background:#D6E8FF}
+.work-placeholder { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.5rem; }
+.wp-emoji { font-size: 3.5rem; }
+.wp-lbl { font-size: 0.7rem; color: #aaa; font-style: italic; }
+.work-item img { width:100%; height:100%; object-fit:cover; display:block; }
+.work-overlay { position:absolute; inset:0; background:var(--purple); opacity:0; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity 0.3s; padding:2rem; text-align:center; }
+.work-item:hover .work-overlay { opacity: 0.93; }
+.work-overlay h3 { font-family:'Fraunces',serif; font-size:1.3rem; font-weight:900; color:white; margin-bottom:0.5rem; }
+.work-overlay p { font-size:0.75rem; color:rgba(255,255,255,0.7); text-transform:uppercase; letter-spacing:0.08em; }
+
+/* FUN */
+#fun { padding: 5rem 5vw; }
+.fun-grid { display: grid; grid-template-columns: repeat(5, 1fr); grid-auto-rows: 160px; gap: 1rem; }
+.fun-card { border-radius: 14px; overflow: hidden; transition: transform 0.25s; cursor: none; }
+.fun-card:hover { transform: translateY(-4px) rotate(-1deg); }
+.fun-card:nth-child(1){background:var(--yellow); grid-row:span 2}
+.fun-card:nth-child(2){background:#D6E8FF; grid-column:span 2}
+.fun-card:nth-child(3){background:var(--green); color:white}
+.fun-card:nth-child(4){background:#FFE8D6; grid-row:span 2}
+.fun-card:nth-child(5){background:var(--purple); color:white}
+.fun-card:nth-child(6){background:#FFD6D6; grid-column:span 2}
+.fun-card:nth-child(7){background:var(--lavender); grid-column:span 2}
+.fun-card:nth-child(8){background:#D6F5E8}
+.fun-inner { width:100%; height:100%; display:flex; flex-direction:column; justify-content:flex-end; padding:1rem; }
+.fun-emoji { font-size:2.5rem; margin-bottom:auto; padding-top:1rem; }
+.fun-label { font-weight:700; font-size:0.85rem; line-height:1.3; }
+.fun-sub { font-size:0.7rem; opacity:0.7; font-style:italic; }
+
+/* CONTACT */
+#contact { background: var(--yellow); padding: 6rem 5vw 2rem; margin-bottom: 0; }
+.see-you { font-family:'Fraunces',serif; font-size:clamp(4rem,10vw,8rem); font-weight:900; color:var(--purple); text-align:center; line-height:1; margin-bottom:2.5rem; }
+.ring-frame { width:70%; max-width:700px; margin:0 auto 3rem; border-radius:16px; overflow:hidden; background:var(--ink); aspect-ratio:16/5; display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:#666; font-style:italic; }
+.ring-frame img { width:100%; height:100%; object-fit:cover; display:block; }
+.socials { display:flex; align-items:center; justify-content:center; gap:1rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+.sc { width:56px; height:56px; background:var(--ink); border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; transition:transform 0.2s, background 0.2s; }
+.sc:hover { transform:scale(1.12) translateY(-3px); background:var(--purple); }
+.sc svg { width:22px; height:22px; fill:white; }
+.sc-tenor { font-weight:800; font-size:0.75rem; color:white; letter-spacing:-0.02em; }
+.contact-email { text-align:center; font-size:1rem; font-weight:500; margin-bottom:3rem; }
+.contact-email a { color:var(--purple); font-weight:700; text-decoration:none; border-bottom:2px solid var(--purple); }
+
+/* FOOTER */
+footer { background:var(--purple); padding:1.2rem 3rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+.footer-credit { font-size:0.85rem; color:rgba(255,255,255,0.9); font-weight:500; }
+.footer-easter { font-size:0.75rem; color:rgba(255,255,255,0.4); font-style:italic; }
+
+/* ANIMATIONS */
+.fade-up { opacity:1; transform:none; }
+.d1 {}
+.d2 {}
+.d3 {}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .about-bento{grid-template-columns:1fr 1fr}
+  .bento-photo{grid-row:span 1;grid-column:span 2;min-height:250px}
+  .work-grid{grid-template-columns:1fr 1fr}
+  .work-item:nth-child(4){grid-column:span 2}
+  .fun-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:600px){
+  nav{padding:0.8rem 1rem}
+  .nav-logo{display:none}
+  .nav-links a{font-size:0.7rem;padding:0.45rem 0.7rem}
+  #hero{padding:5rem 1.5rem 3rem}
+  .hero-image-area{display:none}
+  .about-bento{grid-template-columns:1fr}
+  .bento-photo{grid-column:span 1;min-height:220px}
+  .work-grid{grid-template-columns:1fr}
+  .work-item:nth-child(4){grid-column:span 1}
+  .fun-grid{grid-template-columns:1fr 1fr}
+  .ring-frame{width:95%}
+  footer{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cring"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-pill">
+    <a href="#hero" class="nav-logo">The<br/><span>Illustrating Mouse</span></a>
+    <ul class="nav-links">
+      <li><a href="#clients">Clients</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Let's connect!</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-content">
+    <h1 class="hero-hello">Hello! <span class="wave">👋</span></h1>
+    <p class="hero-intro">
+      I'm Juhi <span class="aka">a.k.a.</span> The Illustrating Mouse 🐭<br/>
+      <span class="bold">Associate Creative Director | Illustrator</span><br/>
+      I make client changes for a living.
+    </p>
+    <p class="hero-location">📍 Noida, India</p>
+    <div class="hero-whisper">
+      Pssst...fellow Designer? 👀<br/>
+      <a href="/cdn-cgi/l/email-protection#39534c51504a4b504f584a4d584f5808080a00795e54585055175a5654">Tell me</a> the <em>dumbest</em> fun fact to start the conversation!
+    </div>
+  </div>
+  <div class="hero-image-area">
+    <!-- ⚠️ REMINDER: Replace the div below with your hero photo -->
+    <!-- <img src="images/hero-photo.png" class="hero-real-img" alt="Juhi Srivastava"/> -->
+    <div class="hero-img-placeholder">
+      🐭
+      <p>⚠️ Replace with images/hero-photo.png</p>
+    </div>
+  </div>
+  <div class="hero-band"></div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <div class="inner"><div class="section-pill-header fade-up">Clients <span class="arrow">→</span></div></div>
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+      <span class="marquee-item"><span class="mdot"></span>Prime Video</span><span class="marquee-item"><span class="mdot"></span>Amazon</span><span class="marquee-item"><span class="mdot"></span>HONOR</span><span class="marquee-item"><span class="mdot"></span>Indeed</span><span class="marquee-item"><span class="mdot"></span>Flipkart Health+</span><span class="marquee-item"><span class="mdot"></span>Naukri</span><span class="marquee-item"><span class="mdot"></span>Bangur</span><span class="marquee-item"><span class="mdot"></span>Groww</span><span class="marquee-item"><span class="mdot"></span>Beautiful Homes</span><span class="marquee-item"><span class="mdot"></span>J. Hampstead</span><span class="marquee-item"><span class="mdot"></span>Thomas Cook</span><span class="marquee-item"><span class="mdot"></span>DLF</span><span class="marquee-item"><span class="mdot"></span>Durex</span><span class="marquee-item"><span class="mdot"></span>Pepsi</span>
+      <span class="marquee-item"><span class="mdot"></span>Prime Video</span><span class="marquee-item"><span class="mdot"></span>Amazon</span><span class="marquee-item"><span class="mdot"></span>HONOR</span><span class="marquee-item"><span class="mdot"></span>Indeed</span><span class="marquee-item"><span class="mdot"></span>Flipkart Health+</span><span class="marquee-item"><span class="mdot"></span>Naukri</span><span class="marquee-item"><span class="mdot"></span>Bangur</span><span class="marquee-item"><span class="mdot"></span>Groww</span><span class="marquee-item"><span class="mdot"></span>Beautiful Homes</span><span class="marquee-item"><span class="mdot"></span>J. Hampstead</span><span class="marquee-item"><span class="mdot"></span>Thomas Cook</span><span class="marquee-item"><span class="mdot"></span>DLF</span><span class="marquee-item"><span class="mdot"></span>Durex</span><span class="marquee-item"><span class="mdot"></span>Pepsi</span>
+    </div>
+  </div>
+  <div class="marquee-wrapper">
+    <div class="marquee-track rev">
+      <span class="marquee-item"><span class="mdot"></span>GoalTeller</span><span class="marquee-item"><span class="mdot"></span>LQ Resorts</span><span class="marquee-item"><span class="mdot"></span>Tenor</span><span class="marquee-item"><span class="mdot"></span>SHARP</span><span class="marquee-item"><span class="mdot"></span>Atlys</span><span class="marquee-item"><span class="mdot"></span>Bikaji</span><span class="marquee-item"><span class="mdot"></span>Pioneer</span><span class="marquee-item"><span class="mdot"></span>Saleem Javed</span><span class="marquee-item"><span class="mdot"></span>Interweave</span><span class="marquee-item"><span class="mdot"></span>Miss Nora</span><span class="marquee-item"><span class="mdot"></span>Ojos</span><span class="marquee-item"><span class="mdot"></span>Vadilal</span><span class="marquee-item"><span class="mdot"></span>The Open Slate Agency</span><span class="marquee-item"><span class="mdot"></span>Chhattisgarh</span><span class="marquee-item"><span class="mdot"></span>More</span>
+      <span class="marquee-item"><span class="mdot"></span>GoalTeller</span><span class="marquee-item"><span class="mdot"></span>LQ Resorts</span><span class="marquee-item"><span class="mdot"></span>Tenor</span><span class="marquee-item"><span class="mdot"></span>SHARP</span><span class="marquee-item"><span class="mdot"></span>Atlys</span><span class="marquee-item"><span class="mdot"></span>Bikaji</span><span class="marquee-item"><span class="mdot"></span>Pioneer</span><span class="marquee-item"><span class="mdot"></span>Saleem Javed</span><span class="marquee-item"><span class="mdot"></span>Interweave</span><span class="marquee-item"><span class="mdot"></span>Miss Nora</span><span class="marquee-item"><span class="mdot"></span>Ojos</span><span class="marquee-item"><span class="mdot"></span>Vadilal</span><span class="marquee-item"><span class="mdot"></span>The Open Slate Agency</span><span class="marquee-item"><span class="mdot"></span>Chhattisgarh</span><span class="marquee-item"><span class="mdot"></span>More</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-pill-header fade-up">Get To Know Me <span class="arrow">→</span></div>
+  <div class="about-bento">
+    <div class="bento-card bento-photo fade-up">
+      <!-- ⚠️ REMINDER: Replace the div below with your about photo -->
+      <!-- <img src="images/about-photo.jpg" alt="Juhi Srivastava"/> -->
+      <div class="bento-photo-inner">🐭<p>⚠️ Replace with images/about-photo.jpg</p></div>
+    </div>
+    <div class="bento-card bento-role fade-up d1">
+      <div><h3>Associate Creative Director</h3><p>Ginger Monkey</p></div>
+      <div class="bento-role-emoji">🐒</div>
+    </div>
+    <div class="bento-card bento-edu fade-up d2">
+      <h3>B.Des</h3>
+      <p>(Fashion Design)<br/>FDDI, Noida</p>
+    </div>
+    <!-- ⚠️ REMINDER: Replace emoji with your illustration/workspace photo -->
+    <!-- <div class="bento-card bento-illo fade-up d1"><img src="images/about-illustration.jpg" style="width:100%;height:100%;object-fit:cover;"/></div> -->
+    <div class="bento-card bento-illo fade-up d1">🎨</div>
+    <div class="bento-card bento-stats fade-up d2">
+      <div><div class="stat-num">9+</div><div class="stat-lbl">Years Experience</div></div>
+      <div><div class="stat-num">9+</div><div class="stat-lbl">Years Freelance</div></div>
+      <div><div class="stat-num">3+</div><div class="stat-lbl">Years Full-time</div></div>
+      <div><div class="stat-num">1.5</div><div class="stat-lbl">Years Internship</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-pill-header fade-up">My Work <span style="font-size:0.75em;opacity:0.7">(hyperlinked)</span> <span class="arrow">→</span></div>
+  <p class="work-note fade-up">⚠️ Replace placeholders with your portfolio images — then link each card to its project!</p>
+  <div class="work-grid fade-up">
+    <!-- ⚠️ REMINDER: For each work item below:
+         1. Replace the work-placeholder div with: <img src="images/FILENAME.jpg" alt="Project name"/>
+         2. Wrap the whole work-item in an <a href="YOUR-PROJECT-URL"> tag
+         3. Update the h3 title in the overlay to match your project name -->
+    <div class="work-item"><!-- ⚠️ images/work-1-illustration.jpg --><div class="work-placeholder"><span class="wp-emoji">🖥️</span><span class="wp-lbl">work-1-illustration.jpg</span></div><div class="work-overlay"><h3>Illustration</h3><p>Add project URL</p></div></div>
+    <div class="work-item"><!-- ⚠️ images/work-2-editorial.jpg --><div class="work-placeholder"><span class="wp-emoji">🃏</span><span class="wp-lbl">work-2-editorial.jpg</span></div><div class="work-overlay"><h3>Editorial</h3><p>Add project URL</p></div></div>
+    <div class="work-item"><!-- ⚠️ images/work-3-character-design.jpg --><div class="work-placeholder"><span class="wp-emoji">🐘</span><span class="wp-lbl">work-3-character-design.jpg</span></div><div class="work-overlay"><h3>Character Design</h3><p>Add project URL</p></div></div>
+    <div class="work-item"><!-- ⚠️ images/work-4-campaign.jpg --><div class="work-placeholder"><span class="wp-emoji">🎬</span><span class="wp-lbl">work-4-campaign.jpg</span></div><div class="work-overlay"><h3>Campaign Work</h3><p>Add project URL</p></div></div>
+    <div class="work-item"><!-- ⚠️ images/work-5-motion.jpg --><div class="work-placeholder"><span class="wp-emoji">💃</span><span class="wp-lbl">work-5-motion.jpg</span></div><div class="work-overlay"><h3>Motion & GIFs</h3><p>Add project URL</p></div></div>
+    <div class="work-item"><!-- ⚠️ images/work-6-personal.jpg --><div class="work-placeholder"><span class="wp-emoji">🐭</span><span class="wp-lbl">work-6-personal.jpg</span></div><div class="work-overlay"><h3>Personal Work</h3><p>Add project URL</p></div></div>
+  </div>
+</section>
+
+<!-- FUN -->
+<section id="fun">
+  <div class="section-pill-header fade-up">Things I Do For Fun <span class="arrow">→</span></div>
+  <div class="fun-grid fade-up">
+    <div class="fun-card"><div class="fun-inner"><div class="fun-emoji">🎸</div><div class="fun-label">Play Guitar</div><div class="fun-sub">& this bad boy (ukulele)</div></div></div>
+    <div class="fun-card"><div class="fun-inner"><div class="fun-emoji">🎵</div><div class="fun-label">Make Music</div><div class="fun-sub">SoundCloud lurker</div></div></div>
+    <div class="fun-card"><div class="fun-inner"><div class="fun-emoji">⭐</div><div class="fun-label">Favourite</div><div class="fun-sub">Stressed doodle mode</div></div></div>
+    <div class="fun-card"><div class="fun-inner"><div class="fun-emoji">🧸</div><div class="fun-label">Trying out random new crafts</div></div></div>
+    <div class="fun-card"><div class="fun-inner"><div class="fun-emoji">🎬</div><div class="fun-label">Cinephile</div></div></div>
+    <div class="fun-card"><div class="fun-inner"><div class="fun-emoji">🍜</div><div class="fun-label">Exploring (Food)</div></div></div>
+    <div class="fun-card"><div class="fun-inner"><div class="fun-emoji">🏔️</div><div class="fun-label">Travel</div></div></div>
+    <div class="fun-card"><div class="fun-inner"><div class="fun-emoji">🐶</div><div class="fun-label">Patting Doggos</div></div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2 class="see-you fade-up">SEE YOU!</h2>
+  <div class="ring-frame fade-up">
+    <!-- ⚠️ REMINDER: Replace span with: <img src="images/contact-mouse-ring.jpg" alt=""/> -->
+    <span>⚠️ Replace with images/contact-mouse-ring.jpg</span>
+  </div>
+  <div class="socials fade-up">
+    <a href="https://www.behance.net/juhisrivastava" target="_blank" class="sc" title="Behance">
+      <svg viewBox="0 0 50 50"><path d="M 9 4 C 6.24 4 4 6.24 4 9 L 4 41 C 4 43.76 6.24 46 9 46 L 41 46 C 43.76 46 46 43.76 46 41 L 46 9 C 46 6.24 43.76 4 41 4 L 9 4 z M 13 13 L 21.199219 13 C 23.699219 13 27.699219 13.100391 27.699219 17.900391 C 27.699219 20.200391 26.299609 21.399609 24.599609 22.099609 C 26.999609 22.699609 28.800781 24.199609 28.800781 27.099609 C 28.800781 32.099609 24.600391 33 20.400391 33 L 13 33 L 13 13 z M 30.5 16 L 37.5 16 L 37.5 18 L 30.5 18 L 30.5 16 z M 17 17 L 17 21 L 20.699219 21 C 22.099219 21 23.699219 20.600391 23.699219 19.400391 C 23.699219 17.900391 22.599609 17 20.599609 17 L 17 17 z M 31.300781 20 C 27.700781 20 25.800781 22.600391 25.800781 26.400391 C 25.800781 30.200391 27.700781 32.699219 31.300781 32.699219 C 33.800781 32.699219 35.399609 31.5 36.099609 29.5 L 33.800781 29.5 C 33.500781 30.3 32.600781 30.800781 31.800781 30.800781 C 29.900781 30.800781 29 29.600391 29 27.900391 L 36.300781 27.900391 C 36.500781 23.600391 34.800781 20 31.300781 20 z M 17 24 L 17 29 L 20.699219 29 C 22.299219 29 24.199219 28.700391 24.199219 26.900391 C 24.199219 24.900391 22.699219 24 20.699219 24 L 17 24 z M 31.199219 21.900391 C 32.899219 21.900391 33.799609 23.000391 33.599609 25.400391 L 28.900391 25.400391 C 29.000391 23.300391 29.999219 21.900391 31.199219 21.900391 z"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/juhi-srivastava-a744631a7/" target="_blank" class="sc" title="LinkedIn">
+      <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/theillustratingmouse/" target="_blank" class="sc" title="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </a>
+    <a href="https://tenor.com/official/theillustratingmouse" target="_blank" class="sc sc-tenor" title="Tenor">tenor</a>
+  </div>
+  <p class="contact-email fade-up"><a href="mailto:juhisrivastava1139@gmail.com">juhisrivastava1139@gmail.com</a></p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-credit">Designed by Juhi | The Illustrating Mouse</span>
+  <span class="footer-easter">(Yes, it's Claude. Yes, I'm still a designer. Tools are tools.)</span>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cring');
+let mx=0,my=0,rx=0,ry=0,started=false;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  cursor.style.left=mx-5+'px'; cursor.style.top=my-5+'px';
+  if(!started){ started=true; rx=mx-16; ry=my-16; cursor.style.opacity=1; ring.style.opacity=1; }
+});
+(function loop(){
+  rx+=(mx-rx-16)*0.13; ry+=(my-ry-16)*0.13;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button,.work-item,.bento-card,.fun-card,.sc').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.transform='scale(2.5)';ring.style.transform='scale(1.5)';ring.style.borderColor='var(--yellow)';});
+  el.addEventListener('mouseleave',()=>{cursor.style.transform='scale(1)';ring.style.transform='scale(1)';ring.style.borderColor='var(--purple)';});
+});
+</script>
+</body>
+</html>
